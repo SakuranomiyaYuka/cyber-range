@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ info.title }} — Cyber Range</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0d1117; color: #c9d1d9; min-height: 100vh; }
+        .nav { background: #161b22; border-bottom: 1px solid #30363d; padding: 12px 24px; display: flex; align-items: center; gap: 16px; }
+        .nav a { color: #58a6ff; text-decoration: none; font-size: 14px; }
+        .nav a:hover { text-decoration: underline; }
+        .nav .title { font-weight: 600; color: #f0f6fc; }
+        .container { max-width: 900px; margin: 24px auto; padding: 0 20px; }
+        .info-box { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+        .info-box h2 { color: #f0f6fc; font-size: 20px; margin-bottom: 8px; }
+        .info-box .desc { color: #8b949e; margin-bottom: 8px; line-height: 1.6; }
+        .info-box .hint { color: #d29922; font-size: 13px; background: #3d2e00; padding: 8px 12px; border-radius: 4px; display: inline-block; }
+        .card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+        .card h3 { color: #f0f6fc; margin-bottom: 12px; }
+        label { display: block; margin-bottom: 6px; color: #8b949e; font-size: 13px; }
+        input[type=text], input[type=password], input[type=file], input[type=email] {
+            width: 100%; padding: 8px 12px; background: #0d1117; border: 1px solid #30363d;
+            border-radius: 6px; color: #c9d1d9; font-size: 14px; margin-bottom: 12px;
+        }
+        input:focus { outline: none; border-color: #58a6ff; }
+        button, .btn {
+            background: #238636; color: #fff; border: 1px solid rgba(240,246,252,.1);
+            padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 14px; text-decoration: none; display: inline-block;
+        }
+        button:hover { background: #2ea043; }
+        .btn-secondary { background: #21262d; color: #c9d1d9; border: 1px solid #30363d; }
+        .btn-secondary:hover { background: #30363d; }
+        table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+        th, td { padding: 8px 12px; text-align: left; border-bottom: 1px solid #21262d; font-size: 13px; }
+        th { color: #8b949e; font-weight: 600; }
+        pre { background: #0d1117; padding: 12px; border-radius: 6px; overflow-x: auto; font-size: 12px; margin-top: 12px; }
+        .tag { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+        .tag-sqli { background: #3d2e00; color: #d29922; }
+        .tag-xss { background: #1c3d1c; color: #3fb950; }
+        .tag-upload { background: #1d2e3d; color: #58a6ff; }
+        .result-success { color: #3fb950; }
+        .result-error { color: #f85149; }
+        .comment { background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 12px; margin-bottom: 8px; }
+        .comment .meta { font-size: 12px; color: #8b949e; }
+        .comment .body { margin-top: 6px; line-height: 1.5; }
+        .level-nav { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+        .level-nav .btn { font-size: 12px; padding: 4px 12px; }
+        .level-nav .btn.active { background: #1f6feb; border-color: #1f6feb; }
+        .query-box { background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 10px; margin-top: 12px; }
+        .query-box .label { color: #8b949e; font-size: 12px; }
+        .query-box code { color: #79c0ff; font-size: 13px; }
+        .flash-message { background: #1c3d1c; border: 1px solid #238636; border-radius: 6px; padding: 10px 14px; margin-bottom: 12px; color: #7ee787; }
+        .empty { color: #484f58; text-align: center; padding: 24px; }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="/">← 返回首页</a>
+        {% if info %}
+        <span class="title">{{ info.title }}</span>
+        <span class="tag tag-{{ info.category }}">{{ info.category|upper }}</span>
+        {% endif %}
+    </div>
+    <div class="container">
+        {% if info %}
+        <div class="info-box">
+            <h2>Level {{ info.level }}: {{ info.title }}</h2>
+            <div class="desc">{{ info.desc }}</div>
+            <div class="hint">💡 提示: {{ info.hint }}</div>
+        </div>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

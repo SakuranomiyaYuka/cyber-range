@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <h3>💬 留言板（CSP 限制）</h3>
+    <p style="color:#d29922; font-size:13px;">当前 CSP 策略: default-src 'self'; script-src 'self'</p>
+    {% if message %}<div class="flash-message">{{ message }}</div>{% endif %}
+    <form method="POST">
+        <label>你的名字</label>
+        <input type="text" name="name" placeholder="匿名">
+        <label>留言内容</label>
+        <input type="text" name="content" placeholder="说点什么..." style="width:100%;padding:8px 12px;background:#0d1117;border:1px solid #30363d;border-radius:6px;color:#c9d1d9;margin-bottom:12px;">
+        <button type="submit">提交评论</button>
+    </form>
+</div>
+
+<div class="card">
+    <h3>📋 所有评论</h3>
+    {% if comments %}
+        {% for c in comments %}
+        <div class="comment">
+            <div class="meta">
+                <strong style="color:#f0f6fc;">{{ c.name }}</strong>
+                <span>{{ c.created_at }}</span>
+            </div>
+            <div class="body">{{ c.content|safe }}</div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="empty">暂无评论</div>
+    {% endif %}
+</div>
+{% endblock %}

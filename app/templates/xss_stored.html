@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <h3>💬 留言板（存储型 XSS）</h3>
+    {% if message %}<div class="flash-message">{{ message }}</div>{% endif %}
+    <form method="POST">
+        <label>你的名字</label>
+        <input type="text" name="name" placeholder="匿名">
+        <label>留言内容</label>
+        <input type="text" name="content" placeholder="说点什么...">
+        <button type="submit">提交评论</button>
+    </form>
+</div>
+
+<div class="card">
+    <h3>📋 所有评论</h3>
+    {% if comments %}
+        {% for c in comments %}
+        <div class="comment">
+            <div class="meta">
+                <strong style="color:#f0f6fc;">{{ c.name|safe }}</strong>
+                <span>{{ c.created_at }}</span>
+            </div>
+            <div class="body">{{ c.content|safe }}</div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="empty">暂无评论</div>
+    {% endif %}
+</div>
+{% endblock %}

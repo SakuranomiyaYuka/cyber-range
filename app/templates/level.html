@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <h3>🔍 参数注入</h3>
+    <form method="GET">
+        <label>传入 id 参数</label>
+        <input type="text" name="id" placeholder="例如: 1" value="{{ input or '' }}">
+        <button type="submit">查询</button>
+    </form>
+</div>
+
+{% if query %}
+<div class="query-box">
+    <div class="label">执行的 SQL：</div>
+    <code>{{ query }}</code>
+</div>
+{% endif %}
+
+{% if result %}
+<div class="card">
+    <h3>查询结果</h3>
+    {% if result is mapping and result.error %}
+        <div class="result-error">{{ result.error }}</div>
+    {% elif result is sequence %}
+    <table>
+        <tr><th>ID</th><th>用户名</th><th>邮箱</th><th>角色</th></tr>
+        {% for row in result %}
+        <tr>
+            <td>{{ row.id }}</td>
+            <td>{{ row.username }}</td>
+            <td>{{ row.email }}</td>
+            <td>{{ row.role }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}

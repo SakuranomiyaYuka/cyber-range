@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <h3>🏴‍☠️ 关卡列表</h3>
+    {% for category, items in levels.items() %}
+    <h4 style="color:#f0f6fc; margin: 16px 0 8px;">{{ category }}</h4>
+    <div class="level-nav">
+        {% for url, name in items %}
+        <a href="{{ url }}" class="btn btn-secondary">{{ name }}</a>
+        {% endfor %}
+    </div>
+    {% endfor %}
+</div>
+
+<div class="card">
+    <h3>📖 说明</h3>
+    <p style="color:#8b949e; line-height:1.8;">
+        欢迎来到 Cyber Range！这是一个 Web 安全训练靶场，所有代码均为原创。<br>
+        每个系列包含 5 个关卡，从简单到进阶。<br>
+        <strong style="color:#f0f6fc;">⚠️ 请仅在授权环境下进行测试。</strong>
+    </p>
+</div>
+{% endblock %}

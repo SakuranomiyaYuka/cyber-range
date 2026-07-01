@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <h3>📤 文件上传</h3>
+    {% if result %}
+        {% if result.success %}
+            <div class="flash-message">{{ result.success }}</div>
+        {% elif result.error %}
+            <div class="card" style="border-color:#f85149;"><div class="result-error">{{ result.error }}</div></div>
+        {% endif %}
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data">
+        <label>选择文件</label>
+        <input type="file" name="file" style="color:#c9d1d9;">
+        <button type="submit">上传</button>
+    </form>
+</div>
+
+<div class="card">
+    <h3>📂 已上传文件</h3>
+    <p style="color:#8b949e; font-size:13px;">
+        通过 <code style="color:#79c0ff;">/uploads/文件名</code> 访问上传的文件。
+        {% if level >= 4 %}提示: 上传图片文件后，检查其内容是否被原样保存。{% endif %}
+    </p>
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <h3>🧩 DOM 型 XSS</h3>
+    <p style="color:#8b949e; margin-bottom:12px;">输入的内容通过前端 JavaScript 写入页面。</p>
+    
+    <label>输入内容</label>
+    <input type="text" id="dom-input" placeholder="尝试: &lt;img src=x onerror=alert(1)&gt;">
+    <button onclick="updateOutput()">显示</button>
+</div>
+
+<div class="card">
+    <h3>输出</h3>
+    <div id="dom-output" class="empty">等待输入...</div>
+</div>
+
+<script>
+function updateOutput() {
+    var input = document.getElementById('dom-input').value;
+    // ⚠️ 漏洞：使用 innerHTML 直接插入用户输入
+    document.getElementById('dom-output').innerHTML = input;
+}
+</script>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <h3>🔍 搜索</h3>
+    <form method="GET">
+        <label>搜索内容</label>
+        <input type="text" name="q" placeholder="尝试: &lt;script&gt;alert(1)&lt;/script&gt;" value="{{ search or '' }}">
+        <button type="submit">搜索</button>
+    </form>
+</div>
+
+{% if search %}
+<div class="card">
+    <h3>搜索结果</h3>
+    <div>
+        你搜索的内容: {{ search|safe }}
+    </div>
+</div>
+{% endif %}
+{% endblock %}

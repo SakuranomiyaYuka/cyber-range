@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <h3>🔐 登录绕过</h3>
+    <form method="POST">
+        <label>用户名</label>
+        <input type="text" name="username" placeholder="admin">
+        <label>密码</label>
+        <input type="text" name="password" placeholder="password">
+        <button type="submit">登录</button>
+    </form>
+</div>
+
+{% if query %}
+<div class="query-box">
+    <div class="label">执行的 SQL：</div>
+    <code>{{ query }}</code>
+</div>
+{% endif %}
+
+{% if result %}
+<div class="card">
+    <h3>查询结果</h3>
+    {% if result is mapping and result.error %}
+        <div class="result-error">{{ result.error }}</div>
+    {% elif result is sequence and result|length > 0 %}
+    <table>
+        <tr><th>ID</th><th>用户名</th><th>邮箱</th><th>角色</th></tr>
+        {% for row in result %}
+        <tr>
+            <td>{{ row.id }}</td>
+            <td>{{ row.username }}</td>
+            <td>{{ row.email }}</td>
+            <td>{{ row.role }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% elif result is sequence %}
+        <div class="empty">登录失败，未找到匹配的用户</div>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}

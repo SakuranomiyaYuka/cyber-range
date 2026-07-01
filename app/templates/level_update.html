@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <h3>✏️ UPDATE 注入</h3>
+    <p style="color:#8b949e; margin-bottom:12px;">更新用户信息（可尝试注入子查询读取 secrets 表）</p>
+    <form method="POST">
+        <label>用户 ID</label>
+        <input type="text" name="id" placeholder="1" value="1">
+        <label>新邮箱</label>
+        <input type="text" name="email" placeholder="test@example.com">
+        <label>当前密码（验证用）</label>
+        <input type="text" name="password" placeholder="当前密码">
+        <button type="submit">更新</button>
+    </form>
+</div>
+
+{% if query %}
+<div class="query-box">
+    <div class="label">执行的 SQL：</div>
+    <code>{{ query }}</code>
+</div>
+{% endif %}
+
+{% if result %}
+<div class="card">
+    {% if result.error %}
+        <div class="result-error">{{ result.error }}</div>
+    {% else %}
+        <div class="result-success">{{ result.message }}</div>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}
